@@ -1,0 +1,49 @@
+import java.util.*;
+
+public class RazorpayCycleDetection {
+
+    static Map<String, List<String>> graph = new HashMap<>();
+    static Set<String> visited = new HashSet<>();
+    static Set<String> recStack = new HashSet<>();
+
+    static boolean dfs(String node) {
+
+        visited.add(node);
+        recStack.add(node);
+
+        for (String neighbor :
+                graph.getOrDefault(node, new ArrayList<>())) {
+
+            if (!visited.contains(neighbor)) {
+
+                if (dfs(neighbor))
+                    return true;
+
+            } else if (recStack.contains(neighbor)) {
+                return true;
+            }
+        }
+
+        recStack.remove(node);
+        return false;
+    }
+
+    public static void main(String[] args) {
+
+        graph.put("auth",
+                Arrays.asList("ledger"));
+
+        graph.put("ledger",
+                Arrays.asList("fraud"));
+
+        graph.put("fraud",
+                Arrays.asList("ledger"));
+
+        boolean cycle = dfs("auth");
+
+        if (cycle)
+            System.out.println("Cycle Detected");
+        else
+            System.out.println("No Cycle Found");
+    }
+}

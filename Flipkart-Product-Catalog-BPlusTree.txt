@@ -1,0 +1,23 @@
+import java.util.*;
+
+public class BPlusTreeRangeQuery {
+
+    public static void main(String[] args) {
+
+        int[] prices = {
+            11800, 12300, 12900, 13500,
+            14100, 14700, 15400, 16200
+        };
+
+        int low = 12000;
+        int high = 14800;
+
+        System.out.println("Products in Price Range:");
+
+        for (int price : prices) {
+            if (price >= low && price <= high) {
+                System.out.println(price);
+            }
+        }
+    }
+}
